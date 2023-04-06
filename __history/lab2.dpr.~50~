@@ -73,7 +73,7 @@ Begin
 End;
 
 //Proc for ShellSort
-Procedure ShellSort(var ArrToSort: TArray; const AmountOfEl: integer; var PractRes: integer);
+Procedure ShellSort(var ArrToSort: TArray; const AmountOfEl: integer; var RealAmOfIters: integer);
 Var
   i, j, AmOfStep, CurrStep: integer;
   //i, j - iterators
@@ -108,7 +108,7 @@ Begin
         while (ArrToSort[j] > ArrToSort[j + CurrStep]) and (j >= 1) do
         begin
           Swap(ArrToSort[j], ArrToSort[j + CurrStep]);
-          inc(PractRes);
+          inc(RealAmOfIters);
 
           j := j - CurrStep;
         end;
@@ -133,17 +133,18 @@ Begin
     //Sorting array and getting therical and practical amount of itarations
     ResultsOfSorts[i].RandArrays.ShellTheor := round(exp(ln(AmountsOfEl[i]) * 1.25));
     ShellSort(Elements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.ShellPract);
-
-    //Making array with rand elements
-    MakeArray(Elements, AmountsOfEl[i], 'Sorted');
-
-
   end;
 
-  //Outputting results
+  //Outputting results in table form
+  writeln(' ________________________________________________________________________________');
+  writeln('| Amount of elements | Array type |       Shell Sort      |     Selection sort    |');
+  writeln('|____________________|____________|_______________________|_______________________|');
+  writeln('|                    |            | Theorical | Practical | Theorical | Practical |');
   for i := 1 to length(AmountsOfEl) do
   begin
-    writeln('Amount of elements')
+    writeln('Amount of elements: ', AmountsOfEl[i]);
+    writeln('Random array:');
+    writeln('Theor:', ResultsOfSorts[i].RandArrays.ShellTheor);
   end;
 
 

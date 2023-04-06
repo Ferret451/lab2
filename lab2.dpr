@@ -133,12 +133,29 @@ Begin
     //Sorting array and getting therical and practical amount of itarations
     ResultsOfSorts[i].RandArrays.ShellTheor := round(exp(ln(AmountsOfEl[i]) * 1.25));
     ShellSort(Elements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.ShellPract);
-
-
   end;
 
-  
+  //Outputting results in table form
+  writeln(' _________________________________________________________________________________');
+  writeln('| Amount of elements | Array type |       Shell Sort      |     Selection sort    |');
+  writeln('|                    |            |_______________________|_______________________|');
+  writeln('|                    |            | Theorical | Practical | Theorical | Practical |');
+  for i := 1 to length(AmountsOfEl) do
+  begin
+    //Part with random
+    writeln('|____________________|____________|___________|___________|___________|___________|');
+    writeln('|', AmountsOfEl[i]:14, '      |  Random    |', ResultsOfSorts[i].RandArrays.ShellTheor:8, '   |', ResultsOfSorts[i].RandArrays.ShellPract:8, '   |', ResultsOfSorts[i].RandArrays.SelectTheor:8, '   |', ResultsOfSorts[i].RandArrays.SelectPract:8, '   |');
+
+    //Part with sorted
+    writeln('|____________________|____________|___________|___________|___________|___________|');
+    writeln('|                    |  Sorted    |', ResultsOfSorts[i].SortedArrays.ShellTheor:8, '   |', ResultsOfSorts[i].SortedArrays.ShellPract:8, '   |', ResultsOfSorts[i].SortedArrays.SelectTheor:8, '   |', ResultsOfSorts[i].SortedArrays.SelectPract:8, '   |');
+
+    //Part with reverse
+    writeln('|____________________|____________|___________|___________|___________|___________|');
+    writeln('|                    |  Reversed  |', ResultsOfSorts[i].ReversedArrays.ShellTheor:8, '   |', ResultsOfSorts[i].ReversedArrays.ShellPract:8, '   |', ResultsOfSorts[i].ReversedArrays.SelectTheor:8, '   |', ResultsOfSorts[i].ReversedArrays.SelectPract:8, '   |');
+  end;
+  writeln('|____________________|____________|___________|___________|___________|___________|');
 
 
-
+  readln;
 End.

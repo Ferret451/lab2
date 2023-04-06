@@ -133,21 +133,19 @@ Begin
     //Sorting array and getting therical and practical amount of itarations
     ResultsOfSorts[i].RandArrays.ShellTheor := round(exp(ln(AmountsOfEl[i]) * 1.25));
     ShellSort(Elements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.ShellPract);
-
-    //Making array with rand elements
-    MakeArray(Elements, AmountsOfEl[i], 'Sorted');
-
-
   end;
 
-  //Outputting results
+  //Outputting results in table form
+  writeln(' _________________________________________________________________________________');
+  writeln('| Amount of elements | Array type |       Shell Sort      |     Selection sort    |');
+  writeln('|____________________|____________|_______________________|_______________________|');
+  writeln('|                    |            | Theorical | Practical | Theorical | Practical |');
   for i := 1 to length(AmountsOfEl) do
   begin
-    writeln('Amount of elements: ', AmountsOfEl[i]);
-    writeln('Random array:');
-    writeln('Theor:', ResultsOfSorts[i].RandArrays.ShellTheor);
+    writeln('|____________________|____________|_______________________|_______________________|');
+    writeln('|  ', AmountsOfEl[i]:8, '|');
   end;
 
 
-
+  readln;
 End.

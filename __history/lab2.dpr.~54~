@@ -7,27 +7,16 @@ Uses
 
 Type
   TArray = array [1..3000] of Integer;
+  TAmOfIters = record
+      ShellTheor: integer;
+      ShellPract: integer;
+      SelectTheor: integer;
+      SelectPract: integer;
+  end;
   TResults = record
-    RandArrays: record
-      ShellTheor: integer;
-      ShellPract: integer;
-      SelectTheor: integer;
-      SelectPract: integer;
-    end;
-
-    SortedArrays: record
-      ShellTheor: integer;
-      ShellPract: integer;
-      SelectTheor: integer;
-      SelectPract: integer;
-    end;
-
-    ReversedArrays: record
-      ShellTheor: integer;
-      ShellPract: integer;
-      SelectTheor: integer;
-      SelectPract: integer;
-    end;
+    RandArrays: TAmOfIters;
+    SortedArrays: TAmOfIters;
+    ReversedArrays: TAmOfIters;
   end;
 
 Const
@@ -84,7 +73,7 @@ Begin
 End;
 
 //Proc for ShellSort
-Procedure ShellSort(var ArrToSort: TArray; const AmountOfEl: integer; var Results: TResults);
+Procedure ShellSort(var ArrToSort: TArray; const AmountOfEl: integer; var RealAmOfIters: integer);
 Var
   i, j, AmOfStep, CurrStep: integer;
   //i, j - iterators
@@ -119,7 +108,7 @@ Begin
         while (ArrToSort[j] > ArrToSort[j + CurrStep]) and (j >= 1) do
         begin
           Swap(ArrToSort[j], ArrToSort[j + CurrStep]);
-          inc(Results.ShellPract);
+          inc(RealAmOfIters);
 
           j := j - CurrStep;
         end;
@@ -142,21 +131,21 @@ Begin
     MakeArray(Elements, AmountsOfEl[i], 'Rand');
 
     //Sorting array and getting therical and practical amount of itarations
-    ResultsOfSorts[i].ShellTheor := round(exp(ln(AmountsOfEl[i]) * 1.25));
-    ShellSort(Elements, AmountsOfEl[i], ResultsOfSorts[i]);
-
-    //Making array with rand elements
-    MakeArray(Elements, AmountsOfEl[i], 'Sorted');
-
-
+    ResultsOfSorts[i].RandArrays.ShellTheor := round(exp(ln(AmountsOfEl[i]) * 1.25));
+    ShellSort(Elements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.ShellPract);
   end;
 
-  //Outputting results
+  //Outputting results in table form
+  writeln(' _________________________________________________________________________________');
+  writeln('| Amount of elements | Array type |       Shell Sort      |     Selection sort    |');
+  writeln('|____________________|____________|_______________________|_______________________|');
+  writeln('|                    |            | Theorical | Practical | Theorical | Practical |');
   for i := 1 to length(AmountsOfEl) do
   begin
-    writeln('Amount of elements')
+    writeln('|____________________|____________|___________|___________|_______________________|');
+    writeln('|', AmountsOfEl[i]:14, '      |   Sorted   |', ResultsOfSorts[i].RandArrays.ShellTheor:8, '   |');
   end;
 
 
-
+  readln;
 End.
