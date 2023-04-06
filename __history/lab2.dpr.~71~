@@ -24,7 +24,7 @@ Const
   //AmountsOfEl - possible amounts of elements
 
 Var
-  RandElements, SortElements, RevElements: TArray;
+  Elements: TArray;
   ResultsOfSorts: array [1..6] of TResults;
   i: integer;
   //Elements - user elements to sort
@@ -156,46 +156,52 @@ End;
 
 Begin
 
-  //Making arrays with random, sorted and reversed elements
-  MakeArray(RandElements, 2000, 'Rand');
-  MakeArray(SortElements, 2000, 'Sorted');
-  MakeArray(RevElements, 2000, 'Reversed');
+  //Making array with random elements
+  MakeArray(RandElements, AmountsOfEl[i], 'Rand');
 
   //Going trough all amounts of elements
   for i := 1 to length(AmountsOfEl) do
   begin
 
     //RANDOM PART
+
+
     //Sorting array and getting theorical and practical amount of itarations
     //Shell sort
     ResultsOfSorts[i].RandArrays.ShellTheor := round(exp(ln(AmountsOfEl[i]) * 1.2));
-    ShellSort(RandElements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.ShellPract);
+    ShellSort(Elements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.ShellPract);
 
     //Selection sort
     ResultsOfSorts[i].RandArrays.SelectionTheor := AmountsOfEl[i] * AmountsOfEl[i];
-    SelectionSort(RandElements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.SelectionPract);
+    SelectionSort(Elements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.SelectionPract);
 
 
     //SORTED PART
+    //Making array with sorted elements
+    MakeArray(Elements, AmountsOfEl[i], 'Sorted');
+
     //Sorting array and getting theorical and practical amount of itarations
     //Shell sort
     ResultsOfSorts[i].SortedArrays.ShellTheor := round(exp(ln(AmountsOfEl[i]) * 1.2));
-    ShellSort(SortElements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.ShellPract);
+    ShellSort(Elements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.ShellPract);
 
     //Selection sort
     ResultsOfSorts[i].SortedArrays.SelectionTheor := AmountsOfEl[i] * AmountsOfEl[i];
-    SelectionSort(SortElements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.SelectionPract);
+    SelectionSort(Elements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.SelectionPract);
 
 
     //REVERSED PART
+    //Making arary with sorted and reversed elements
+    MakeArray(Elements, AmountsOfEl[i], 'Reversed');
+
     //Sorting array and getting theorical and practical amount of itarations
     //Shell sort
     ResultsOfSorts[i].ReversedArrays.ShellTheor := round(exp(ln(AmountsOfEl[i]) * 1.2));
-    ShellSort(RevElements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.ShellPract);
+    ShellSort(Elements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.ShellPract);
 
     //Selection sort
     ResultsOfSorts[i].ReversedArrays.SelectionTheor := AmountsOfEl[i] * AmountsOfEl[i];
-    SelectionSort(RevElements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.SelectionPract);
+    SelectionSort(Elements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.SelectionPract);
   end;
 
   //Outputting results in table form

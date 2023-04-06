@@ -6,7 +6,7 @@ Uses
   System.SysUtils;
 
 Type
-  TArray = array [1..3000] of Integer;
+  TArray = array [1..2000] of Integer;
   TAmOfIters = record
       ShellTheor: integer;
       ShellPract: integer;
@@ -157,9 +157,9 @@ End;
 Begin
 
   //Making arrays with random, sorted and reversed elements
-  MakeArray(RandElements, 2000, 'Rand');
-  MakeArray(SortElements, 2000, 'Sorted');
-  MakeArray(RevElements, 2000, 'Reversed');
+  MakeArray(RandElements, AmountsOfEl[i], 'Rand');
+  MakeArray(SortElements, AmountsOfEl[i], 'Sorted');
+  MakeArray(RevElements, AmountsOfEl[i], 'Reversed');
 
   //Going trough all amounts of elements
   for i := 1 to length(AmountsOfEl) do
