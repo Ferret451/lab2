@@ -10,8 +10,8 @@ Type
   TAmOfIters = record
       ShellTheor: integer;
       ShellPract: integer;
-      SelectTheor: integer;
-      SelectPract: integer;
+      SelectionTheor: integer;
+      SelectionPract: integer;
   end;
   TResults = record
     RandArrays: TAmOfIters;
@@ -21,9 +21,10 @@ Type
 
 Const
   AmountsOfEl: array [1..6] of Integer = (100, 250, 500, 1000, 2000, 3000);
+  //AmountsOfEl - possible amounts of elements
 
 Var
-  Elements: TArray;
+  RandElements, SortElements, RevElements: TArray;
   ResultsOfSorts: array [1..6] of TResults;
   i: integer;
   //Elements - user elements to sort
@@ -57,7 +58,7 @@ Begin
       if  Request = 'Reversed' then
         for i := AmountOfEl downto 1 do
         begin
-          ArrToMake[i] := i;
+          ArrToMake[AmountOfEl - i + 1] := i;
         end;
 End;
 
@@ -73,7 +74,7 @@ Begin
 End;
 
 //Proc for ShellSort
-Procedure ShellSort(var ArrToSort: TArray; const AmountOfEl: integer; var RealAmOfIters: integer);
+Procedure ShellSort(ArrToSort: TArray; const AmountOfEl: integer; var RealAmOfIters: integer);
 Var
   i, j, AmOfStep, CurrStep: integer;
   //i, j - iterators
@@ -97,7 +98,7 @@ Begin
     i := 1;
     while i + CurrStep <= AmountOfEl do
     begin
-
+      inc(RealAmOfIters);
 
       //Going back to beggining and swapping while needed
       if ArrToSort[i] > ArrToSort[i + CurrStep] then
@@ -105,12 +106,15 @@ Begin
         //j is for saving value of i
         j := i;
 
+        dec(RealAmOfIters);
+
         while (ArrToSort[j] > ArrToSort[j + CurrStep]) and (j >= 1) do
         begin
           Swap(ArrToSort[j], ArrToSort[j + CurrStep]);
-          inc(RealAmOfIters);
 
           j := j - CurrStep;
+
+          //inc(RealAmOfIters);
         end;
       end;
 
@@ -122,7 +126,7 @@ Begin
   end;
 End;
 
-Procedure SelectionSort(var ArrToSort: TArray; const AmountOfEl: integer; var RealAmOfIters: integer);
+Procedure SelectionSort(ArrToSort: TArray; const AmountOfEl: integer; var RealAmOfIters: integer);
 Var
   i, j, currMin: integer;
   //i, j - iterators
@@ -132,61 +136,92 @@ Begin
   //Starting from first element
   i := 1;
 
+  //Sorting array
   while i < AmountOfEl do
   begin
+    //Assigning starting value for min
+    currMin := ArrToSort[i];
 
-    //Finding current max
-    for j := i to AmountOfEl do
-      if ArrToSort[j] > currMin then
-        currMin := ArrToSort[i];
-
-    //Swapping with current first element if
-    if currMin > ArrToSort[i] then
+    //Finding current min
+    for j := i + 1 to AmountOfEl do
     begin
-      Swap(currMin, ArrToSort[i]);
       inc(RealAmOfIters);
+
+      if ArrToSort[j] < currMin then
+        currMin := ArrToSort[j];
     end;
+
+    //Swapping with current first element if less value was found
+    inc(RealAmOfIters);
+
+    if currMin <> ArrToSort[i] then
+      Swap(currMin, ArrToSort[i]);
+
+    inc(i);
   end;
 End;
 
 Begin
+  //Making arrays with random, sorted and reversed elements
+  MakeArray(RandElements, 2000, 'Rand');
+  MakeArray(SortElements, 2000, 'Sorted');
+  MakeArray(RevElements, 2000, 'Reversed');
 
   //Going trough all amounts of elements
   for i := 1 to length(AmountsOfEl) do
   begin
-    //Making array with random elements
-    MakeArray(Elements, AmountsOfEl[i], 'Rand');
 
-    //Sorting array and getting theorical and practical amount of itarations
+    //RANDOM PART
+    //Getting theorical and practical amount of itarations
     //Shell sort
-    ResultsOfSorts[i].RandArrays.ShellTheor := round(exp(ln(AmountsOfEl[i]) * 1.25));
-    ShellSort(Elements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.ShellPract);
+    ResultsOfSorts[i].RandArrays.ShellTheor := round(exp(ln(AmountsOfEl[i]) * 1.2));
+    ShellSort(RandElements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.ShellPract);
 
     //Selection sort
+    ResultsOfSorts[i].RandArrays.SelectionTheor := (sqr(AmountsOfEl[i]) - AmountsOfEl[i]) div 2;
+    SelectionSort(RandElements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.SelectionPract);
 
 
-    //Making array with random elements
-    MakeArray(Elements, AmountsOfEl[i], 'Rand');
+    //SORTED PART
+    //Getting theorical and practical amount of itarations
+    //Shell sort
+    ResultsOfSorts[i].SortedArrays.ShellTheor := round(exp(ln(AmountsOfEl[i]) * 1.2));
+    ShellSort(SortElements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.ShellPract);
+
+    //Selection sort
+    ResultsOfSorts[i].SortedArrays.SelectionTheor := (sqr(AmountsOfEl[i]) - AmountsOfEl[i]) div 2;
+    SelectionSort(SortElements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.SelectionPract);
+
+
+    //REVERSED PART
+    //Getting theorical and practical amount of itarations
+    //Shell sort
+    ResultsOfSorts[i].ReversedArrays.ShellTheor := round(exp(ln(AmountsOfEl[i]) * 1.2));
+    ShellSort(RevElements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.ShellPract);
+
+    //Selection sort
+    ResultsOfSorts[i].ReversedArrays.SelectionTheor := (sqr(AmountsOfEl[i]) - AmountsOfEl[i]) div 2;
+    SelectionSort(RevElements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.SelectionPract);
   end;
 
   //Outputting results in table form
   writeln(' _________________________________________________________________________________');
-  writeln('| Amount of elements | Array type |       Shell Sort      |     Selection sort    |');
-  writeln('|                    |            |_______________________|_______________________|');
+  writeln('|                    |            |       Shell Sort      |     Selection sort    |');
+  writeln('| Amount of elements | Array type |_______________________|_______________________|');
   writeln('|                    |            | Theorical | Practical | Theorical | Practical |');
   for i := 1 to length(AmountsOfEl) do
   begin
     //Part with random
     writeln('|____________________|____________|___________|___________|___________|___________|');
-    writeln('|', AmountsOfEl[i]:14, '      |  Random    |', ResultsOfSorts[i].RandArrays.ShellTheor:8, '   |', ResultsOfSorts[i].RandArrays.ShellPract:8, '   |', ResultsOfSorts[i].RandArrays.SelectTheor:8, '   |', ResultsOfSorts[i].RandArrays.SelectPract:8, '   |');
+    writeln('|', AmountsOfEl[i]:14, '      |  Random    |', ResultsOfSorts[i].RandArrays.ShellTheor:8, '   |', ResultsOfSorts[i].RandArrays.ShellPract:8, '   |', ResultsOfSorts[i].RandArrays.SelectionTheor:8, '   |', ResultsOfSorts[i].RandArrays.SelectionPract:8, '   |');
 
     //Part with sorted
     writeln('|____________________|____________|___________|___________|___________|___________|');
-    writeln('|                    |  Sorted    |', ResultsOfSorts[i].SortedArrays.ShellTheor:8, '   |', ResultsOfSorts[i].SortedArrays.ShellPract:8, '   |', ResultsOfSorts[i].SortedArrays.SelectTheor:8, '   |', ResultsOfSorts[i].SortedArrays.SelectPract:8, '   |');
+    writeln('|                    |  Sorted    |', ResultsOfSorts[i].SortedArrays.ShellTheor:8, '   |', ResultsOfSorts[i].SortedArrays.ShellPract:8, '   |', ResultsOfSorts[i].SortedArrays.SelectionTheor:8, '   |', ResultsOfSorts[i].SortedArrays.SelectionPract:8, '   |');
 
     //Part with reverse
     writeln('|____________________|____________|___________|___________|___________|___________|');
-    writeln('|                    |  Reversed  |', ResultsOfSorts[i].ReversedArrays.ShellTheor:8, '   |', ResultsOfSorts[i].ReversedArrays.ShellPract:8, '   |', ResultsOfSorts[i].ReversedArrays.SelectTheor:8, '   |', ResultsOfSorts[i].ReversedArrays.SelectPract:8, '   |');
+    writeln('|                    |  Reversed  |', ResultsOfSorts[i].ReversedArrays.ShellTheor:8, '   |', ResultsOfSorts[i].ReversedArrays.ShellPract:8, '   |', ResultsOfSorts[i].ReversedArrays.SelectionTheor:8, '   |', ResultsOfSorts[i].ReversedArrays.SelectionPract:8, '   |');
   end;
   writeln('|____________________|____________|___________|___________|___________|___________|');
 

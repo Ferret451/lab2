@@ -159,7 +159,8 @@ End;
 
 function ShellTheorCalc(const AAmOfElements: Integer): Integer;
 begin
-  Result := AmountsOfEl[i] * Round(ln(AmountsOfEl[i]) / ln(2));
+  Result := Round(sqr(ln(AmountsOfEl[i]) / ln(2)));
+  Result := Result * AmountsOfEl[i];
 end;
 
 function SelectionTheorCalc(const AAmOfElements: Integer): Integer;
