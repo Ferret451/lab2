@@ -98,8 +98,11 @@ Begin
         ÑurrMin := ArrToSort[j];
     end;
 
-    //Swapping with current first element
-    Swap(ÑurrMin, ArrToSort[i]);
+    //Swapping with current first element if less value was found
+    inc(ARealAmOfIters);
+
+    if ÑurrMin <> ArrToSort[i] then
+      Swap(ÑurrMin, ArrToSort[i]);
 
     inc(i);
   end;
