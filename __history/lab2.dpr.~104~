@@ -1,4 +1,4 @@
-Program lab2;
+﻿Program lab2;
 
 {$APPTYPE CONSOLE}
 
@@ -41,13 +41,11 @@ Begin
 
   //Arr with random numbers
   if ARequest = 'Rand' then
-  begin
-    Randomize;
     for i := 1 to AAmountOfEl do
     begin
+      Randomize;
       AArrToMake[i] := Random(100) + 1;
-    end;
-  end
+    end
   else
     //Arr with sorted numbers
     if ARequest = 'Sorted' then
@@ -87,7 +85,7 @@ Begin
     ShellPactCalc(RandElements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.ShellPract);
 
     //Selection sort
-    SelectionPractCalc(RandElements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.SelectionPract);
+    SelectionSort(RandElements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.SelectionPract);
 
     //SORTED PART
     //Getting practical amount of itarations
@@ -95,7 +93,7 @@ Begin
     ShellPactCalc(SortElements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.ShellPract);
 
     //Selection sort
-    SelectionPractCalc(SortElements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.SelectionPract);
+    SelectionSort(SortElements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.SelectionPract);
 
     //REVERSED PART
     //Getting practical amount of itarations
@@ -103,7 +101,7 @@ Begin
     ShellPactCalc(RevElements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.ShellPract);
 
     //Selection sort
-    SelectionPractCalc(RevElements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.SelectionPract);
+    SelectionSort(RevElements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.SelectionPract);
   end;
 
   //Outputting results in table form

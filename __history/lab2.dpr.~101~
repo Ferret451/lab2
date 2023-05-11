@@ -2,22 +2,9 @@ Program lab2;
 
 {$APPTYPE CONSOLE}
 
-Uses
+uses
   System.SysUtils,
   SortAnalyze in 'SortAnalyze.pas';
-
-Type
-  TAmOfIters = record
-      ShellTheor: integer;
-      ShellPract: integer;
-      SelectionTheor: integer;
-      SelectionPract: integer;
-  end;
-  TResults = record
-    RandArrays: TAmOfIters;
-    SortedArrays: TAmOfIters;
-    ReversedArrays: TAmOfIters;
-  end;
 
 Const
   AmountsOfEl: array [1..6] of Integer = (100, 250, 500, 1000, 2000, 3000);
@@ -41,13 +28,11 @@ Begin
 
   //Arr with random numbers
   if ARequest = 'Rand' then
-  begin
-    Randomize;
     for i := 1 to AAmountOfEl do
     begin
+      Randomize;
       AArrToMake[i] := Random(100) + 1;
-    end;
-  end
+    end
   else
     //Arr with sorted numbers
     if ARequest = 'Sorted' then
@@ -84,26 +69,26 @@ Begin
     //RANDOM PART
     //Getting practical amount of itarations
     //Shell sort
-    ShellPactCalc(RandElements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.ShellPract);
+    ShellSort(RandElements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.ShellPract);
 
     //Selection sort
-    SelectionPractCalc(RandElements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.SelectionPract);
+    SelectionSort(RandElements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.SelectionPract);
 
     //SORTED PART
     //Getting practical amount of itarations
     //Shell sort
-    ShellPactCalc(SortElements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.ShellPract);
+    ShellSort(SortElements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.ShellPract);
 
     //Selection sort
-    SelectionPractCalc(SortElements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.SelectionPract);
+    SelectionSort(SortElements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.SelectionPract);
 
     //REVERSED PART
     //Getting practical amount of itarations
     //Shell sort
-    ShellPactCalc(RevElements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.ShellPract);
+    ShellSort(RevElements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.ShellPract);
 
     //Selection sort
-    SelectionPractCalc(RevElements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.SelectionPract);
+    SelectionSort(RevElements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.SelectionPract);
   end;
 
   //Outputting results in table form

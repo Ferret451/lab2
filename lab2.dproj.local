@@ -2,9 +2,9 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>1899.12.30 00:00:00.000.085,=C:\Users\stasg\OneDrive\Документы\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.154,D:\Уник\ОАиП\Лабы и разминки\2 сем\lab2\SortAnalize.pas=D:\Уник\ОАиП\Лабы и разминки\2 сем\lab2\SortAnalyze.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.637,D:\Уник\ОАиП\Лабы и разминки\2 сем\lab2\lab2.dproj=C:\Users\stasg\OneDrive\Документы\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.364,D:\Уник\ОАиП\Лабы и разминки\2 сем\lab2\Unit1.pas=D:\Уник\ОАиП\Лабы и разминки\2 сем\lab2\SortAnalize.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.364,D:\Уник\ОАиП\Лабы и разминки\2 сем\lab2\SortAnalize.pas=D:\Уник\ОАиП\Лабы и разминки\2 сем\lab2\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.637,C:\Users\stasg\OneDrive\Документы\Embarcadero\Studio\Projects\Project1.dproj=D:\Уник\ОАиП\Лабы и разминки\2 сем\lab2\lab2.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.154,D:\Уник\ОАиП\Лабы и разминки\2 сем\lab2\SortAnalyze.pas=D:\Уник\ОАиП\Лабы и разминки\2 сем\lab2\SortAnalize.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.188,=D:\Уник\ОАиП\Лабы и разминки\2 сем\lab2\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>

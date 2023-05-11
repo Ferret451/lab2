@@ -3,7 +3,8 @@ Program lab2;
 {$APPTYPE CONSOLE}
 
 Uses
-  System.SysUtils;
+  System.SysUtils,
+  SortAnalyze in 'SortAnalyze.pas';
 
 Type
   TArray = array [1..3000] of Integer;
@@ -32,7 +33,7 @@ Var
   //i - iterator for cycles
 
 //Proc for making array
-Procedure MakeArray(var ArrToMake: TArray; const AmountOfEl: integer; const Request: string);
+Procedure MakeArray(var AArrToMake: TArray; const AAmountOfEl: integer; const ARequest: string);
 Var
   i: integer;
   //i - iterator for cycles
@@ -40,132 +41,27 @@ Var
 Begin
 
   //Arr with random numbers
-  if Request = 'Rand' then
-    for i := 1 to AmountOfEl do
+  if ARequest = 'Rand' then
+    for i := 1 to AAmountOfEl do
     begin
       Randomize;
-      ArrToMake[i] := Random(100) + 1;
+      AArrToMake[i] := Random(100) + 1;
     end
   else
     //Arr with sorted numbers
-    if  Request = 'Sorted' then
-      for i := 1 to AmountOfEl do
+    if ARequest = 'Sorted' then
+      for i := 1 to AAmountOfEl do
       begin
-        ArrToMake[i] := i;
+        AArrToMake[i] := i;
       end
     else
       //Arr with sorted and reversed numbers
-      if  Request = 'Reversed' then
-        for i := AmountOfEl downto 1 do
+      if  ARequest = 'Reversed' then
+        for i := AAmountOfEl downto 1 do
         begin
-          ArrToMake[AmountOfEl - i + 1] := i;
+          AArrToMake[AAmountOfEl - i + 1] := i;
         end;
 End;
-
-//Proc to swap value of variables
-Procedure Swap(var AFirstEl, ASecondEl: integer);
-Var
-  Buf: integer;
-  //Buf - variable to swap to elements
-Begin
-  Buf := AFirstEl;
-  AFirstEl := ASecondEl;
-  ASecondEl := Buf;
-End;
-
-//Proc for ShellSort
-Procedure ShellSort(AArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
-Var
-  i, j, AmOfStep, CurrStep: integer;
-  //i, j - iterators
-  //AmOfStep - amount if steps for sorting
-  //CurrStep - step for current itteration
-
-Begin
-  //Determinating amount of steps
-  AmOfStep := round(ln(AAmountOfEl)/ln(3) - 1);
-
-  //Finding max step
-  CurrStep := 1;
-  for i := 1 to AmOfStep do
-    CurrStep := CurrStep * 3 + 1;
-
-  //Sorting array
-  while CurrStep >= 1 do
-  begin
-
-    //Going trough array
-    i := 1;
-    while i + CurrStep <= AAmountOfEl do
-    begin
-      inc(ARealAmOfIters);
-
-      //Going back to beggining and swapping while needed
-      if AArrToSort[i] > AArrToSort[i + CurrStep] then
-      begin
-        //j is for saving value of i
-        j := i;
-
-        repeat
-          Swap(AArrToSort[j], AArrToSort[j + CurrStep]);
-          j := j - CurrStep;
-
-          inc(ARealAmOfIters);
-        until (AArrToSort[j] <= AArrToSort[j + CurrStep]) or (j < 1);
-      end;
-
-      inc(i);
-    end;
-
-    //Changing step
-    CurrStep := CurrStep div 3;
-  end;
-End;
-
-Procedure SelectionSort(ArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
-Var
-  i, j, currMin: integer;
-  //i, j - iterators
-  //currMin - max for current iteration
-
-Begin
-  //Starting from first element
-  i := 1;
-
-  //Sorting array
-  while i < AAmountOfEl do
-  begin
-    //Assigning starting value for min
-    currMin := ArrToSort[i];
-
-    //Finding current min
-    for j := i + 1 to AAmountOfEl do
-    begin
-      inc(ARealAmOfIters);
-
-      if ArrToSort[j] < currMin then
-        currMin := ArrToSort[j];
-    end;
-
-    //Swapping with current first element if less value was found
-    inc(ARealAmOfIters);
-
-    if currMin <> ArrToSort[i] then
-      Swap(currMin, ArrToSort[i]);
-
-    inc(i);
-  end;
-End;
-
-function ShellTheorCalc(const AAmOfElements: Integer): Integer;
-begin
-  Result := AmountsOfEl[i] * Round(sqr(ln(AmountsOfEl[i]) / ln(2)));
-end;
-
-function SselectuinTheorCalc(const AAmOfElements: Integer): Integer;
-begin
-  Result := round((sqr(AAmOfElements) - AAmOfElements) / 2);
-end;
 
 Begin
   //Making arrays with random, sorted and reversed elements
@@ -176,36 +72,36 @@ Begin
   //Going trough all amounts of elements
   for i := 1 to length(AmountsOfEl) do
   begin
+    //Getting theorical amount of itarations
+    ResultsOfSorts[i].RandArrays.ShellTheor := ShellTheorCalc(AmountsOfEl[i]);
+    ResultsOfSorts[i].RandArrays.SelectionTheor := SelectionTheorCalc(AmountsOfEl[i]);
+    ResultsOfSorts[i].SortedArrays.ShellTheor := ShellTheorCalc(AmountsOfEl[i]);
+    ResultsOfSorts[i].SortedArrays.SelectionTheor := SelectionTheorCalc(AmountsOfEl[i]);
+    ResultsOfSorts[i].ReversedArrays.ShellTheor := ShellTheorCalc(AmountsOfEl[i]);
+    ResultsOfSorts[i].ReversedArrays.SelectionTheor := SelectionTheorCalc(AmountsOfEl[i]);
 
     //RANDOM PART
-    //Getting theorical and practical amount of itarations
+    //Getting practical amount of itarations
     //Shell sort
-    ResultsOfSorts[i].RandArrays.ShellTheor := ShellTheorCalc(AmountsOfEl[i]);
     ShellSort(RandElements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.ShellPract);
 
     //Selection sort
-    ResultsOfSorts[i].RandArrays.SelectionTheor := AmountsOfEl[i] * Round(sqr(ln(AmountsOfEl[i]) / ln(2)));
     SelectionSort(RandElements, AmountsOfEl[i], ResultsOfSorts[i].RandArrays.SelectionPract);
 
-
     //SORTED PART
-    //Getting theorical and practical amount of itarations
+    //Getting practical amount of itarations
     //Shell sort
-    ResultsOfSorts[i].SortedArrays.ShellTheor := ShellTheorCalc(AmountsOfEl[i]);
     ShellSort(SortElements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.ShellPract);
 
     //Selection sort
-    ResultsOfSorts[i].SortedArrays.SelectionTheor := AmountsOfEl[i] * Round(sqr(ln(AmountsOfEl[i]) / ln(2)));
     SelectionSort(SortElements, AmountsOfEl[i], ResultsOfSorts[i].SortedArrays.SelectionPract);
 
     //REVERSED PART
-    //Getting theorical and practical amount of itarations
+    //Getting practical amount of itarations
     //Shell sort
-    ResultsOfSorts[i].ReversedArrays.ShellTheor := ShellTheorCalc(AmountsOfEl[i]);
     ShellSort(RevElements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.ShellPract);
 
     //Selection sort
-    ResultsOfSorts[i].ReversedArrays.SelectionTheor := AmountsOfEl[i] * Round(sqr(ln(AmountsOfEl[i]) / ln(2)));
     SelectionSort(RevElements, AmountsOfEl[i], ResultsOfSorts[i].ReversedArrays.SelectionPract);
   end;
 

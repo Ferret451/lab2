@@ -4,9 +4,20 @@ Interface
 
 Type
   TArray = array [1..3000] of Integer;
+  TAmOfIters = record
+      ShellTheor: integer;
+      ShellPract: integer;
+      SelectionTheor: integer;
+      SelectionPract: integer;
+  end;
+  TResults = record
+    RandArrays: TAmOfIters;
+    SortedArrays: TAmOfIters;
+    ReversedArrays: TAmOfIters;
+  end;
 
-Procedure ShellPactCalc(AArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
-Procedure SelectionPractCalc(ArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
+Procedure ShellSort(AArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
+Procedure SelectionSort(ArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
 Function ShellTheorCalc(const AAmOfElements: Integer): Integer;
 Function SelectionTheorCalc(const AAmOfElements: Integer): Integer;
 
@@ -24,7 +35,7 @@ Begin
 End;
 
 //Proc for ShellSort
-Procedure ShellPactCalc(AArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
+Procedure ShellSort(AArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
 Var
   i, j, AmOfSteps, CurrStep: integer;
   //i, j - iterators
@@ -73,7 +84,7 @@ Begin
 End;
 
 //Proc for selection sort
-Procedure SelectionPractCalc(ArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
+Procedure SelectionSort(ArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
 Var
   i, j, ÑurrMin: integer;
   //i, j - iterators

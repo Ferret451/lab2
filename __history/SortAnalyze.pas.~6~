@@ -6,7 +6,7 @@ Type
   TArray = array [1..3000] of Integer;
 
 Procedure ShellPactCalc(AArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
-Procedure SelectionPractCalc(ArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
+Procedure SelectionSort(ArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
 Function ShellTheorCalc(const AAmOfElements: Integer): Integer;
 Function SelectionTheorCalc(const AAmOfElements: Integer): Integer;
 
@@ -73,7 +73,7 @@ Begin
 End;
 
 //Proc for selection sort
-Procedure SelectionPractCalc(ArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
+Procedure SelectionSort(ArrToSort: TArray; const AAmountOfEl: integer; var ARealAmOfIters: integer);
 Var
   i, j, ÑurrMin: integer;
   //i, j - iterators

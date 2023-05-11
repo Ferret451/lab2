@@ -41,13 +41,11 @@ Begin
 
   //Arr with random numbers
   if ARequest = 'Rand' then
-  begin
-    Randomize;
     for i := 1 to AAmountOfEl do
     begin
+      Randomize;
       AArrToMake[i] := Random(100) + 1;
-    end;
-  end
+    end
   else
     //Arr with sorted numbers
     if ARequest = 'Sorted' then
